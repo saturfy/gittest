@@ -9,6 +9,8 @@ def parse():
     argParser.add_argument("-p", "--push", action="store_true", help="push to the repository if no arguments selected everything is pushed")
     argParser.add_argument("-f", "--files",'--nargs', nargs='+', help="file list to push")
     argParser.add_argument("-b", "--back", help="change back given number of versions", type=int)
+    argParser.add_argument("-r", "--reset", action="store_true", help="resets to current version")
+
 
 
 
@@ -44,9 +46,12 @@ def execute(args):
         os.system ('git push origin main')
     
     elif args.back is not None:
-        print('Reverting back ' + str(args.back) + 'versions')
+        print('Reverting back ' + str(args.back) + ' versions')
         os.system('git checkout HEAD~' + str(args.back))
-        
+
+    elif args.reset is not False:
+        print("resetting to current version")       
+        os.system('git checkout main') 
 
 
 
