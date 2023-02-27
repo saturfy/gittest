@@ -7,7 +7,8 @@ def parse():
     argParser.add_argument("-s", "--start", action="store_true", help="initialize remote repository")
     argParser.add_argument("-u", "--url", help="repository URL")
     argParser.add_argument("-p", "--push", action="store_true", help="push to the repository if no arguments selected everything is pushed")
-    argParser.add_argument("-f", "--files", help="file list to push")
+    argParser.add_argument("-f", "--files",'--nargs', nargs='+', help="file list to push")
+    argParser.add_argument("-b", "--back", help="change back given number of versions", type=int)
 
 
 
@@ -26,8 +27,11 @@ def execute(args):
         else: 
             raise( ValueError("missing url"))
     
+
     elif args.push is not False:
         
+        print(args.files)
+
         if args.files is None:
             print("Every change will be pushed")
             os.system('git add .')
@@ -38,6 +42,10 @@ def execute(args):
         
         os.system('git commit -m "automated commit')
         os.system ('git push origin main')
+    
+    elif args.back is not None:
+        print('Reverting back ' + str(args.back) + 'versions')
+        os.system('git checkout HEAD~' + str(args.back))
         
 
 
